@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    more.info: https://github.com/for1337
+  creationTimestamp: null
+  labels:
+    io.kompose.service: espocrm
+  name: espocrm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: espocrm
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        more.info: https://github.com/for1337
+      creationTimestamp: null
+      labels:
+        io.kompose.service: espocrm
+    spec:
+      containers:
+        - env:
+            - name: ESPOCRM_ADMIN_PASSWORD
+              value: password
+            - name: ESPOCRM_ADMIN_USERNAME
+              value: admin
+            - name: ESPOCRM_DATABASE_HOST
+              value: mysql
+            - name: ESPOCRM_DATABASE_PASSWORD
+              value: database_password
+            - name: ESPOCRM_DATABASE_USER
+              value: espocrm
+            - name: ESPOCRM_SITE_URL
+              value: http://localhost:8080
+          image: espocrm/espocrm
+          name: espocrm
+          ports:
+            - containerPort: 80
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: espocrm
+      restartPolicy: Always
+      volumes:
+        - name: espocrm
+          persistentVolumeClaim:
+            claimName: espocrm
+status: {}

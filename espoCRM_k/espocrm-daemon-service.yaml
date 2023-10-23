@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    more.info: https://github.com/for1337
+  creationTimestamp: null
+  labels:
+    io.kompose.service: espocrm-daemon
+  name: espocrm-daemon
+spec:
+  ports:
+    - name: "80"
+      port: 80
+      targetPort: 80
+  selector:
+    io.kompose.service: espocrm-daemon
+status:
+  loadBalancer: {}
